@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tropical ReVibe – Eco Friendly & Zero Waste Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  /* color scheme */
+
+  /* white */
+  --cream: #ffffff;
+  --warm-white: #f8fdfb;
+  --sand: #c8e8d4;
+  --off-white: #f0faf4;
+
+  /* green */
+  --sage: #3dbf70;
+  --deep-green: #2a8a5a;
+  --forest: #1d6644;
+  --bark: #3aaa6a;
+  --accent: #2cd882;
+  --text: #1a4030;
+
+  /* blue */
+  --ocean: #2878b0;
+  --deep-ocean: #2060a0;
+  --aqua: #20b0e0;
+  --aqua-light: #70d8f8;
+  --blue-cream: #e8f5fd;
+  --blue-muted: #a8d8f0;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: #0a2c3a; color: var(--text); overflow-x: hidden; }
+
+/* page system */
+.page { display: none; min-height: 100vh; padding-top: 72px; }
+.page.active { display: block; }
+.page-home { padding-top: 0; background: #0a2c3a; }
+
+/*nav bar */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1rem 2rem; background: rgba(255,255,255,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,196,114,0.12); transition: box-shadow 0.3s; }
+nav.scrolled { box-shadow: 0 4px 24px rgba(14,102,68,0.1); }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--deep-green); letter-spacing: -0.02em; cursor: pointer; }
+.nav-logo span { color: var(--sage); font-style: italic; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { text-decoration: none; font-size: 0.85rem; font-weight: 500; color: var(--deep-green); letter-spacing: 0.06em; text-transform: uppercase; position: relative; transition: color 0.2s; cursor: pointer; }
+.nav-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transition: transform 0.3s; }
+.nav-links a:hover::after, .nav-links a.active-link::after { transform: scaleX(1); }
+.nav-links a.active-link { color: var(--deep-green); }
+.nav-cta { background: var(--deep-green); color: var(--cream) !important; padding: 0.5rem 1.2rem; border-radius: 2px; }
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: var(--sage) !important; color: var(--cream) !important; }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.cart-btn { position: relative; background: none; border: 2px solid var(--deep-green); border-radius: 2px; width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.2s; color: var(--deep-green); }
+.cart-btn:hover { background: var(--deep-green); color: var(--cream); }
+.cart-badge { position: absolute; top: -7px; right: -7px; background: var(--accent); color: var(--forest); font-size: 0.65rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: none; align-items: center; justify-content: center; }
+.cart-badge.visible { display: flex; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { width: 24px; height: 2px; background: var(--deep-green); transition: all 0.3s; }
+
+/* Hero */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #0a3d6b; }
+
+/* Sky photo  */
+.hero-sky {
+  position: absolute; inset: 0; z-index: 0;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=85') center top / cover no-repeat;
+}
+/* Image overlay for background */
+.hero-sky::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5,20,40,0.65) 0%,
+    rgba(8,40,28,0.60) 45%,
+    rgba(3,18,10,0.88) 100%
+  );
+}
+
+/* Beach sand */
+.hero-beach {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 1;
+  height: 28%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(10,20,10,0.7) 50%,
+    rgba(5,15,8,0.92) 100%
+  );
+  mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%);
+}
+
+/* Ocean*/
+.hero-ocean {
+  position: absolute; z-index: 1;
+  bottom: 22%; left: 0; right: 0; height: 16%;
+  background: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1800&q=80') center center / cover no-repeat;
+  opacity: 0.25;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+}
+
+
+.hero-bg { display: none; }
+.leaf { position: absolute; pointer-events: none; opacity: 0; }
+.leaf svg { width: 100%; height: 100%; }
+.hero-content { position: relative; z-index: 4; text-align: center; padding: 2rem; max-width: 800px; }
+.hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(4rem, 12vw, 9rem); line-height: 0.92; color: var(--cream); font-weight: 700; letter-spacing: -0.03em; opacity: 0; animation: fadeUp 0.9s 0.4s forwards; }
+.hero-title em { font-style: italic; color: var(--accent); display: block; }
+.hero-divider { width: 80px; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); margin: 2rem auto; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+.hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 3vw, 1.6rem); color: rgba(244,240,230,0.85); font-style: italic; font-weight: 300; line-height: 1.5; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+.hero-actions { margin-top: 3rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 1s forwards; }
+.btn-primary { background: var(--accent); color: var(--forest); padding: 1rem 2.5rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.3s; border: 2px solid var(--accent); cursor: pointer; font-family: 'DM Sans', sans-serif; display: inline-block; }
+.btn-primary:hover { background: transparent; color: var(--accent); }
+.btn-outline { background: transparent; color: var(--cream); padding: 1rem 2.5rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; border: 2px solid rgba(244,240,230,0.4); transition: all 0.3s; }
+.btn-outline:hover { border-color: var(--cream); background: rgba(244,240,230,0.08); }
+.hero-scroll { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: rgba(244,240,230,0.5); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; animation: bounce 2s infinite; }
+.hero-scroll::after { content: ''; width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(244,240,230,0.5), transparent); }
+
+ 
+
+/* Home section - cards */
+.home-sections {
+  padding: 5rem 3rem 6rem;
+  background: linear-gradient(160deg, #071f12 0%, #0b3020 30%, #092436 65%, #071826 100%);
+  position: relative; overflow: hidden;
+}
+.home-sections-intro {
+  text-align: center; max-width: 520px; margin: 0 auto 3.5rem;
+}
+.home-sections-intro .section-label { color: var(--accent); }
+.home-sections-intro .section-title { color: #ffffff; font-size: clamp(1.8rem, 3.5vw, 2.8rem); margin-bottom: 0.75rem; }
+.home-sections-intro p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; color: rgba(255,255,255,0.5); }
+
+.home-sections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; width: 100%; }
+
+.home-card {
+  border-radius: 24px; overflow: hidden; cursor: pointer;
+  position: relative; min-height: 460px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+.home-card::before {
+  content: ''; position: absolute; inset: 0; z-index: 3; border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.4s;
+  pointer-events: none;
+}
+.home-card:hover { transform: translateY(-12px) scale(1.015); box-shadow: 0 36px 72px rgba(0,0,0,0.45); }
+.home-card:hover::before { border-color: rgba(255,255,255,0.22); }
+.home-card:hover .home-card-img { transform: scale(1.06); }
+
+/* Accent ng card */
+.home-card-shop::after    { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#2cd882,#3dbf70); z-index:4; border-radius:24px 24px 0 0; opacity:0; transition:opacity 0.4s; }
+.home-card-bundles::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#20b0e0,#70d8f8); z-index:4; border-radius:24px 24px 0 0; opacity:0; transition:opacity 0.4s; }
+.home-card-about::after   { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#2878b0,#20b0e0); z-index:4; border-radius:24px 24px 0 0; opacity:0; transition:opacity 0.4s; }
+.home-card:hover::after { opacity:1; }
+
+.home-card-bg { display: none; }
+.home-card-img {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+  overflow: hidden;
+}
+.home-card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0.05) 100%);
+}
+.home-card-shop    .home-card-img,
+.home-card-bundles .home-card-img,
+.home-card-about   .home-card-img { background-image: none; }
+.home-card-img svg.botanical {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 0; transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.home-card:hover .home-card-img svg.botanical { transform: scale(1.06); }
+
+.home-card-body { position: relative; z-index: 2; padding: 1.5rem 2rem 2.2rem; }
+.card-upload-hint {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.6rem; cursor: pointer;
+  background: rgba(0,0,0,0.35);
+  transition: background 0.3s;
+}
+.card-upload-hint:hover { background: rgba(0,0,0,0.5); }
+.card-upload-hint span { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.75); font-family: 'DM Sans', sans-serif; }
+.home-card-img.has-image .card-upload-hint { opacity: 0; transition: opacity 0.3s; }
+.home-card-img.has-image:hover .card-upload-hint { opacity: 1; }
+.home-card-label {
+  font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase;
+  margin-bottom: 0.65rem; color: rgba(255,255,255,0.6);
+  display: flex; align-items: center; gap: 0.45rem;
+}
+.home-card-label::before {
+  content: ''; display: inline-block; width: 5px; height: 5px;
+  border-radius: 50%; background: var(--accent); flex-shrink: 0;
+}
+.home-card-bundles .home-card-label::before { background: var(--aqua); }
+.home-card-about   .home-card-label::before { background: var(--aqua-light); }
+
+.home-card-title {
+  font-family: 'Playfair Display', serif; font-size: 2.1rem;
+  font-weight: 700; line-height: 1.1; color: #ffffff;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  margin-bottom: 0.5rem;
+}
+.home-card-desc {
+  font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  font-style: italic; color: rgba(255,255,255,0.55); line-height: 1.5;
+  margin-bottom: 1.4rem;
+}
+.home-card-arrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: 600; color: #ffffff;
+  padding: 0.55rem 1.3rem; border-radius: 30px;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+.home-card-shop    .home-card-arrow { border-color: rgba(44,216,130,0.5); }
+.home-card-bundles .home-card-arrow { border-color: rgba(32,176,224,0.5); }
+.home-card-about   .home-card-arrow { border-color: rgba(112,216,248,0.5); }
+.home-card:hover .home-card-arrow { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.75); transform: translateX(3px); }
+
+/* backgrounds per card */
+.home-card-shop    .home-card-img { background: linear-gradient(145deg, #0a3d20 0%, #145c38 30%, #0b4228 65%, #071e12 100%); }
+.home-card-bundles .home-card-img { background: linear-gradient(145deg, #0d3352 0%, #155060 30%, #0a2e42 65%, #071826 100%); }
+.home-card-about   .home-card-img { background: linear-gradient(145deg, #083040 0%, #124858 30%, #0a2c3a 65%, #061520 100%); }
+
+.home-card-emoji { display: none; }
+
+/* Header */
+.page-header { padding: 4rem 2rem 3rem; }
+.page-header-green { background: var(--forest); }
+.page-header-blue { background: var(--deep-ocean); }
+.page-header .section-label { color: var(--accent); }
+.page-header-blue .section-label { color: var(--aqua-light); }
+.page-header .section-title { color: var(--cream); }
+.page-header .section-sub { color: rgba(244,240,230,0.65); }
+.page-header-blue .section-sub { color: rgba(234,244,251,0.65); }
+.page-header .container { max-width: 1200px; margin: 0 auto; }
+
+/* section */
+section { padding: 6rem 2rem; }
+.section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.75rem; }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--deep-green); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.section-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--bark); font-style: italic; max-width: 500px; }
+.container { max-width: 1200px; margin: 0 auto; }
+
+/* tagline */
+.tagline-band { background: var(--deep-green); padding: 5rem 2rem; text-align: center; position: relative; overflow: hidden; }
+.tagline-band::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='30' cy='30' r='1' fill='%2300c472' fill-opacity='0.12'/%3E%3C/g%3E%3C/svg%3E") repeat; z-index: 0; }
+.tagline-band-photo { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400&q=70') center 70% / cover no-repeat; opacity: 0.13; z-index: 0; }
+.tagline-band blockquote { position: relative; font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 5vw, 3.2rem); font-style: italic; color: #ffffff; line-height: 1.3; font-weight: 300; max-width: 700px; margin: 0 auto; z-index: 1; }
+.tagline-band cite { display: block; margin-top: 1.5rem; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; font-style: normal; }
+
+/* shop section */
+#page-shop { background: #ffffff; }
+.shop-body { padding: 3rem 2rem 6rem; background: #ffffff; }
+.shop-controls { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
+.filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.filter-tab { background: #ffffff; border: 1px solid #c8e8d4; color: var(--deep-green); padding: 0.5rem 1.2rem; border-radius: 2px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.2s; }
+.filter-tab:hover { border-color: var(--sage); background: #f0faf4; color: var(--sage); }
+.filter-tab.active { background: var(--deep-green); color: #ffffff; border-color: var(--deep-green); }
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+.product-card { background: #ffffff; border: 1px solid #d4eddd; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.3s; }
+.product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(14,110,64,0.1); }
+.product-img { background: #f0faf4; height: 200px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border-bottom: 1px solid #e8f5ee; }
+.product-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,196,114,0.05), transparent); }
+.product-badge { position: absolute; top: 0.6rem; left: 0.6rem; background: var(--deep-green); color: #ffffff; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 2px; }
+.product-body { padding: 1.1rem; flex: 1; display: flex; flex-direction: column; background: #ffffff; }
+.product-category { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.3rem; }
+.product-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--deep-green); font-weight: 700; margin-bottom: 0.35rem; line-height: 1.3; }
+.product-desc { font-size: 0.78rem; color: #6a7a6e; line-height: 1.6; flex: 1; }
+.product-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid #e8f5ee; }
+.product-price { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #000000; font-weight: 700; }
+.product-price small { font-size: 0.68rem; font-family: 'DM Sans', sans-serif; color: var(--sage); font-weight: 400; display: block; line-height: 1; }
+.add-to-cart-btn { background: var(--deep-green); color: #ffffff; border: none; padding: 0.5rem 0.9rem; border-radius: 2px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.73rem; letter-spacing: 0.08em; text-transform: uppercase; transition: all 0.2s; }
+.add-to-cart-btn:hover { background: var(--accent); color: var(--forest); }
+.add-to-cart-btn.added { background: var(--accent); color: var(--forest); }
+
+/* bundles */
+#page-bundles { background: #ffffff; }
+.bundles-body { padding: 3rem 2rem 6rem; background: #ffffff; }
+.offers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 1200px; margin: 0 auto; }
+.offer-card { background: #ffffff; border: 1px solid rgba(0,152,200,0.15); border-radius: 8px; position: relative; overflow: hidden; transition: border-color 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+.offer-card:hover { border-color: var(--aqua); box-shadow: 0 12px 40px rgba(0,152,200,0.15); }
+.offer-card-img { position: relative; width: 100%; height: 220px; overflow: hidden; flex-shrink: 0; }
+.offer-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94); }
+.offer-card:hover .offer-card-img img { transform: scale(1.05); }
+.offer-card-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,80,140,0.18) 0%, rgba(0,40,80,0.32) 100%); }
+.offer-card-content { padding: 2rem 2rem 2.5rem; position: relative; flex: 1; display: flex; flex-direction: column; }
+.offer-num { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 700; color: rgba(0,152,200,0.08); line-height: 1; position: absolute; top: 0.5rem; right: 1.5rem; font-style: italic; }
+.offer-tag { display: inline-block; background: var(--aqua); color: #ffffff; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.25rem 0.75rem; border-radius: 2px; margin-bottom: 1rem; font-weight: 500; }
+.offer-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--deep-ocean); font-weight: 700; margin-bottom: 0.75rem; line-height: 1.2; }
+.offer-body { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: #6a7a8a; line-height: 1.6; font-style: italic; margin-bottom: 1rem; }
+.offer-items-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+.offer-items-list li { background: var(--blue-cream); border: 1px solid rgba(0,152,200,0.15); padding: 0.3rem 0.8rem; border-radius: 2px; font-size: 0.8rem; color: var(--deep-ocean); }
+.offer-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #000000; font-weight: 700; margin-bottom: 1rem; margin-top: auto; }
+.offer-price del { font-size: 1rem; color: #aac0d0; font-family: 'DM Sans', sans-serif; font-weight: 400; margin-right: 0.5rem; }
+.btn-bundle { background: var(--aqua); color: #ffffff; border: none; padding: 0.75rem 1.8rem; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; align-self: flex-start; }
+.btn-bundle:hover { background: var(--ocean); }
+
+/* local */
+#page-local { background: #ffffff; }
+.local-body { padding: 3rem 2rem 6rem; }
+.local-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1200px; margin: 0 auto; }
+.local-visual { position: relative; }
+.local-badge { position: absolute; background: var(--deep-green); color: var(--cream); padding: 1.5rem; border-radius: 4px; top: -1.5rem; right: -1.5rem; text-align: center; box-shadow: 0 8px 32px rgba(7,65,42,0.2); z-index: 2; }
+.local-badge strong { display: block; font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--accent); font-style: italic; }
+.local-badge span { font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; }
+.local-img-wrap { border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, #2a8a5a 0%, #1d6644 100%); padding: 3rem; text-align: center; min-height: 340px; display: flex; align-items: center; justify-content: center; }
+.local-img-wrap svg { width: 200px; height: 200px; opacity: 0.4; }
+.local-products { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
+.local-item { background: #ffffff; border: 1px solid #e0f0e8; border-radius: 4px; padding: 1.2rem; display: flex; align-items: flex-start; gap: 0.75rem; transition: box-shadow 0.3s; }
+.local-item:hover { box-shadow: 0 8px 24px rgba(14,110,64,0.1); }
+.local-item-icon { font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
+.local-item-text strong { display: block; font-size: 0.85rem; color: var(--deep-green); font-weight: 500; margin-bottom: 0.2rem; }
+.local-item-text small { font-size: 0.75rem; color: #9a9a88; font-family: 'Cormorant Garamond', serif; font-style: italic; }
+
+/* tell me why */
+#page-why { background: #ffffff; }
+.why-body { padding: 3rem 2rem 6rem; }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+.why-item { text-align: center; padding: 2rem; background: #ffffff; border: 1px solid #e0f0e8; border-top: 3px solid var(--accent); border-radius: 0 0 4px 4px; }
+.why-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+.why-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--deep-green); font-weight: 700; margin-bottom: 0.5rem; }
+.why-text { font-size: 0.85rem; color: #6a6a5a; line-height: 1.7; }
+
+/* about me */
+#page-about { background: #f8fdfb; }
+
+/* banner with photo */
+.about-hero {
+  position: relative; height: 480px; overflow: hidden;
+  display: flex; align-items: flex-end;
+}
+.about-hero-img {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=85') center 40% / cover no-repeat;
+}
+.about-hero-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(5,30,18,0.3) 0%, rgba(5,30,18,0.75) 60%, rgba(3,18,10,0.95) 100%);
+}
+.about-hero-content {
+  position: relative; z-index: 2; padding: 3rem 3.5rem;
+  max-width: 700px;
+}
+.about-hero-eyebrow {
+  font-size: 0.68rem; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.about-hero-eyebrow::before {
+  content: ''; display: inline-block; width: 28px; height: 1px; background: var(--accent);
+}
+.about-hero-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 700; color: #ffffff; line-height: 1.08; letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.about-hero-title em { font-style: italic; color: var(--accent); }
+.about-hero-sub {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  color: rgba(255,255,255,0.7); font-style: italic; font-weight: 300;
+}
+
+/* Story - about section */
+.about-story {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  max-width: 100%; overflow: hidden;
+}
+.about-story-img {
+  position: relative; min-height: 500px; overflow: hidden;
+}
+.about-story-img img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.about-story-img:hover img { transform: scale(1.04); }
+.about-story-img-badge {
+  position: absolute; bottom: 2rem; left: 2rem; z-index: 2;
+  background: rgba(5,30,18,0.85); backdrop-filter: blur(12px);
+  border: 1px solid rgba(44,216,130,0.25); border-radius: 6px;
+  padding: 1rem 1.4rem; color: #fff;
+}
+.about-story-img-badge strong {
+  font-family: 'Playfair Display', serif; font-size: 1.8rem;
+  font-weight: 700; color: var(--accent); font-style: italic; display: block; line-height: 1;
+}
+.about-story-img-badge span { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.65; }
+
+.about-story-text {
+  background: #ffffff; padding: 4rem 4rem 4rem 4.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.about-story-label {
+  font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--sage); margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.about-story-label::before { content: ''; width: 24px; height: 1px; background: var(--sage); }
+.about-story-heading {
+  font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: var(--deep-green); font-weight: 700; line-height: 1.15;
+  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+}
+.about-story-intro {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+  color: var(--bark); font-style: italic; line-height: 1.75;
+  margin-bottom: 1.5rem; padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e0f0e8;
+}
+.about-story-body {
+  font-size: 0.9rem; color: #3a4a40; line-height: 1.9; margin-bottom: 2.5rem;
+}
+
+/* hmm */
+.about-stats {
+  display: flex; gap: 2.5rem; margin-bottom: 2.5rem;
+}
+.about-stat { text-align: center; }
+.about-stat-num {
+  font-family: 'Playfair Display', serif; font-size: 2rem;
+  color: var(--deep-green); font-weight: 700; font-style: italic; line-height: 1;
+}
+.about-stat-label {
+  font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #8aaa90; margin-top: 0.3rem;
+}
+.about-stat-divider { width: 1px; background: #d4eddd; align-self: stretch; }
+
+/* Vision  Mission */
+.about-vm-section {
+  background: linear-gradient(160deg, #071f12 0%, #0b3020 40%, #092436 100%);
+  padding: 5rem 3.5rem;
+}
+.about-vm-inner { max-width: 1200px; margin: 0 auto; }
+.about-vm-header { text-align: center; margin-bottom: 3.5rem; }
+.about-vm-header .section-label { color: var(--accent); }
+.about-vm-header .section-title { color: #ffffff; font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+.about-vm-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.about-vm-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 2.5rem; backdrop-filter: blur(8px);
+  transition: border-color 0.3s, background 0.3s;
+  position: relative; overflow: hidden;
+}
+.about-vm-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--sage));
+  border-radius: 12px 12px 0 0;
+}
+.about-vm-card.mission::before { background: linear-gradient(90deg, var(--aqua), var(--aqua-light)); }
+.about-vm-card:hover { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); }
+.about-vm-icon { font-size: 2rem; margin-bottom: 1.2rem; display: block; }
+.about-vm-label {
+  font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.5rem;
+}
+.about-vm-card.mission .about-vm-label { color: var(--aqua-light); }
+.about-vm-title {
+  font-family: 'Playfair Display', serif; font-size: 1.5rem;
+  color: #ffffff; font-weight: 700; margin-bottom: 1rem; line-height: 1.2;
+}
+.about-vm-text { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.85; }
+
+/* Values natin */
+.about-values {
+  background: #ffffff; padding: 5rem 3.5rem;
+}
+.about-values-inner { max-width: 1200px; margin: 0 auto; }
+.about-values-header { text-align: center; margin-bottom: 3.5rem; }
+.about-values-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.about-value-item {
+  padding: 2rem 1.75rem; border-radius: 8px;
+  background: #f8fdfb; border: 1px solid #e0f0e8;
+  transition: box-shadow 0.3s, transform 0.3s;
+  position: relative; overflow: hidden;
+}
+.about-value-item::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--sage));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s;
+}
+.about-value-item:hover { box-shadow: 0 12px 40px rgba(14,110,64,0.1); transform: translateY(-4px); }
+.about-value-item:hover::after { transform: scaleX(1); }
+.about-value-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
+.about-value-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--deep-green); font-weight: 700; margin-bottom: 0.5rem; }
+.about-value-text { font-size: 0.82rem; color: #6a7a6e; line-height: 1.75; }
+
+/* san mahahanap */
+.about-find-us {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  overflow: hidden;
+}
+.about-find-img {
+  position: relative; min-height: 420px; overflow: hidden;
+}
+.about-find-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.about-find-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(14,60,40,0.4) 0%, rgba(10,44,58,0.3) 100%);
+}
+.about-find-content {
+  background: var(--deep-green); padding: 4rem 4rem 4rem 4.5rem;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.about-find-content .section-label { color: var(--accent); margin-bottom: 0.75rem; }
+.about-find-heading {
+  font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: #ffffff; font-weight: 700; line-height: 1.2; margin-bottom: 2.5rem;
+}
+.about-info-list { display: flex; flex-direction: column; gap: 0; }
+.about-info-item {
+  display: flex; align-items: flex-start; gap: 1.2rem;
+  padding: 1.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.about-info-item:last-child { border-bottom: none; }
+.about-info-icon-wrap {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(44,216,130,0.12); border: 1px solid rgba(44,216,130,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.about-info-label { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+.about-info-value { font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.55; }
+.about-info-value a { color: var(--accent); text-decoration: none; }
+.about-info-value a:hover { text-decoration: underline; }
+.about-find-cta { margin-top: 2.5rem; }
+
+/* mobile/ tablet design 1 */
+@media (max-width: 768px) {
+  .about-hero { height: 360px; }
+  .about-hero-content { padding: 2rem 1.5rem; }
+  .about-story { grid-template-columns: 1fr; }
+  .about-story-img { min-height: 300px; }
+  .about-story-text { padding: 2.5rem 1.5rem; }
+  .about-stats { gap: 1.5rem; }
+  .about-vm-section { padding: 3.5rem 1.5rem; }
+  .about-vm-cards { grid-template-columns: 1fr; }
+  .about-values { padding: 3.5rem 1.5rem; }
+  .about-values-grid { grid-template-columns: 1fr 1fr; }
+  .about-find-us { grid-template-columns: 1fr; }
+  .about-find-img { min-height: 260px; }
+  .about-find-content { padding: 2.5rem 1.5rem; }
+}
+
+/* call me */
+#page-contact { background: #ffffff; }
+.contact-body { padding: 3rem 2rem 6rem; text-align: center; }
+.contact-body .section-label { color: var(--sage); }
+.contact-body .section-title { color: var(--deep-green); }
+.contact-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: #6a8070; font-style: italic; margin: 1rem auto 3rem; max-width: 480px; }
+.contact-options { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
+.contact-pill { display: flex; align-items: center; gap: 0.6rem; background: #ffffff; border: 1px solid #d4eddd; padding: 1rem 1.8rem; border-radius: 2px; text-decoration: none; color: var(--deep-green); font-size: 0.9rem; transition: all 0.3s; cursor: pointer; }
+.contact-pill:hover { background: var(--deep-green); color: #ffffff; border-color: var(--deep-green); }
+.contact-pill span { font-size: 1.2rem; }
+.btn-primary-blue { background: var(--aqua); color: #ffffff; padding: 1rem 2.5rem; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.3s; border: 2px solid var(--aqua); cursor: pointer; font-family: 'DM Sans', sans-serif; display: inline-block; }
+.btn-primary-blue:hover { background: transparent; color: var(--aqua); }
+
+/* footer*/
+footer { background: var(--forest); border-top: 1px solid rgba(237,247,239,0.08); padding: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 1rem; font-weight: 700; cursor: pointer; }
+.footer-logo span { color: var(--accent); font-style: italic; }
+footer p { font-size: 0.75rem; color: rgba(237,247,239,0.35); letter-spacing: 0.05em; }
+
+/* cart section*/
+.cart-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(6,46,80,0.5); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+.cart-drawer { position: fixed; top: 0; right: 0; bottom: 0; z-index: 301; width: 400px; max-width: 100vw; background: var(--warm-white); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); box-shadow: -12px 0 48px rgba(6,46,80,0.18); }
+.cart-drawer.open { transform: translateX(0); }
+.cart-header { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 1.6rem; border-bottom: 1px solid var(--sand); background: var(--cream); }
+.cart-header h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--deep-green); }
+.cart-header h3 span { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--sage); font-weight: 400; margin-left: 0.4rem; }
+.close-cart { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--sage); transition: color 0.2s; }
+.close-cart:hover { color: var(--deep-green); }
+.cart-body { flex: 1; overflow-y: auto; padding: 1.1rem 1.6rem; }
+.cart-empty { text-align: center; padding: 3.5rem 1rem; }
+.cart-empty-icon { font-size: 2.8rem; }
+.cart-empty p { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--sage); font-style: italic; margin-top: 0.6rem; }
+.cart-item { display: flex; gap: 0.9rem; align-items: flex-start; padding: 0.9rem 0; border-bottom: 1px solid var(--sand); }
+.cart-item-icon { width: 56px; height: 56px; background: var(--cream); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-name { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--deep-green); font-weight: 700; margin-bottom: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cart-item-cat { font-size: 0.68rem; color: var(--sage); text-transform: uppercase; letter-spacing: 0.1em; }
+.cart-item-row { display: flex; align-items: center; justify-content: space-between; margin-top: 0.55rem; }
+.qty-control { display: flex; align-items: center; border: 1px solid var(--sand); border-radius: 2px; overflow: hidden; }
+.qty-btn { background: none; border: none; width: 26px; height: 26px; cursor: pointer; font-size: 0.9rem; color: var(--deep-green); transition: background 0.15s; display: flex; align-items: center; justify-content: center; }
+.qty-btn:hover { background: var(--cream); }
+.qty-num { width: 28px; text-align: center; font-size: 0.82rem; font-weight: 600; border-left: 1px solid var(--sand); border-right: 1px solid var(--sand); height: 26px; display: flex; align-items: center; justify-content: center; }
+.cart-item-price { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--deep-green); font-weight: 700; }
+.remove-item { background: none; border: none; color: #b09080; cursor: pointer; font-size: 0.72rem; margin-top: 0.35rem; transition: color 0.2s; text-decoration: underline; font-family: 'DM Sans', sans-serif; padding: 0; }
+.remove-item:hover { color: #c04040; }
+.cart-footer { padding: 1.1rem 1.6rem; background: var(--cream); border-top: 1px solid var(--sand); }
+.cart-subtotal { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+.cart-subtotal span { font-size: 0.82rem; color: #7a7a6a; }
+.cart-subtotal strong { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--deep-green); }
+.cart-total { display: flex; justify-content: space-between; align-items: center; padding-top: 0.65rem; border-top: 1px solid var(--sand); margin-bottom: 1.1rem; margin-top: 0.2rem; }
+.cart-total span { font-size: 0.88rem; font-weight: 500; color: var(--deep-green); }
+.cart-total strong { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--deep-green); }
+.checkout-btn { width: 100%; background: var(--deep-green); color: var(--cream); border: none; padding: 0.95rem; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.checkout-btn:hover { background: var(--accent); color: var(--forest); }
+.continue-shopping { display: block; text-align: center; margin-top: 0.65rem; font-size: 0.76rem; color: var(--sage); cursor: pointer; text-decoration: underline; background: none; border: none; font-family: 'DM Sans', sans-serif; width: 100%; }
+.continue-shopping:hover { color: var(--deep-green); }
+
+/* checkout section*/
+.checkout-overlay { position: fixed; inset: 0; z-index: 400; background: rgba(6,46,80,0.88); backdrop-filter: blur(8px); display: none; align-items: flex-start; justify-content: center; padding: 2rem 1rem; overflow-y: auto; }
+.checkout-overlay.open { display: flex; }
+.checkout-box { background: var(--warm-white); border-radius: 6px; width: 100%; max-width: 700px; position: relative; animation: scaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1); margin: auto; }
+.checkout-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.checkout-left { padding: 2.2rem; }
+.checkout-right { background: var(--cream); padding: 2.2rem; border-left: 1px solid var(--sand); border-radius: 0 6px 6px 0; }
+.checkout-close { position: absolute; top: 1rem; right: 1.3rem; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--sage); transition: color 0.2s; z-index: 10; }
+.checkout-close:hover { color: var(--deep-green); }
+.checkout-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--deep-green); font-weight: 700; margin-bottom: 0.2rem; }
+.checkout-subtitle { font-size: 0.78rem; color: var(--sage); margin-bottom: 1.8rem; }
+.steps { display: flex; margin-bottom: 1.8rem; }
+.step { flex: 1; text-align: center; position: relative; }
+.step::after { content: ''; position: absolute; top: 13px; left: 50%; right: -50%; height: 2px; background: var(--sand); z-index: 0; }
+.step:last-child::after { display: none; }
+.step-circle { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--sand); background: var(--warm-white); display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 600; color: var(--sage); margin: 0 auto 0.35rem; position: relative; z-index: 1; transition: all 0.3s; }
+.step.active .step-circle { background: var(--deep-green); border-color: var(--deep-green); color: var(--cream); }
+.step.done .step-circle { background: var(--accent); border-color: var(--accent); color: var(--forest); }
+.step-label { font-size: 0.62rem; color: var(--sage); text-transform: uppercase; letter-spacing: 0.1em; }
+.step.active .step-label { color: var(--deep-green); font-weight: 600; }
+.form-section { display: none; }
+.form-section.active { display: block; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.35rem; font-weight: 500; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--sand); border-radius: 2px; background: var(--warm-white); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.86rem; transition: border-color 0.2s; outline: none; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--sage); }
+.form-group textarea { resize: vertical; min-height: 72px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.payment-options { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.3rem; }
+.payment-opt { display: flex; align-items: center; gap: 0.65rem; padding: 0.8rem 0.9rem; border: 2px solid var(--sand); border-radius: 3px; cursor: pointer; transition: border-color 0.2s; }
+.payment-opt:hover { border-color: var(--sage); }
+.payment-opt.selected { border-color: var(--deep-green); background: rgba(14,110,64,0.03); }
+.payment-opt input[type="radio"] { accent-color: var(--deep-green); width: 15px; height: 15px; flex-shrink: 0; }
+.payment-opt-info strong { display: block; font-size: 0.85rem; color: var(--deep-green); }
+.payment-opt-info small { font-size: 0.72rem; color: var(--sage); }
+.payment-opt-icon { font-size: 1.2rem; flex-shrink: 0; }
+.form-nav { display: flex; gap: 0.65rem; margin-top: 1.3rem; }
+.btn-next { flex: 1; background: var(--deep-green); color: var(--cream); border: none; padding: 0.85rem; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
+.btn-next:hover { background: var(--accent); color: var(--forest); }
+.btn-back { background: none; border: 1px solid var(--sand); color: var(--text); padding: 0.85rem 1rem; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
+.btn-back:hover { border-color: var(--sage); }
+.order-summary-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--deep-green); margin-bottom: 1.1rem; }
+.order-summary-items { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.2rem; max-height: 240px; overflow-y: auto; }
+.summary-item { display: flex; gap: 0.65rem; align-items: flex-start; }
+.summary-item-icon { width: 40px; height: 40px; flex-shrink: 0; overflow: hidden; border-radius: 4px; background: var(--cream); }
+.summary-item-name { font-size: 0.8rem; color: var(--deep-green); font-weight: 500; flex: 1; line-height: 1.3; }
+.summary-item-qty { font-size: 0.72rem; color: var(--sage); }
+.summary-item-price { font-family: 'Playfair Display', serif; font-size: 0.9rem; color: var(--deep-green); font-weight: 700; flex-shrink: 0; }
+.summary-divider { border: none; border-top: 1px solid var(--sand); margin: 0.65rem 0; }
+.summary-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: #7a7a6a; margin-bottom: 0.35rem; }
+.summary-row.total { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--deep-green); font-weight: 700; margin-top: 0.4rem; padding-top: 0.4rem; border-top: 1px solid var(--sand); }
+.eco-note { background: rgba(0,196,114,0.08); border: 1px solid rgba(0,196,114,0.25); border-radius: 3px; padding: 0.65rem; font-size: 0.72rem; color: var(--deep-green); margin-top: 0.9rem; display: flex; gap: 0.45rem; align-items: flex-start; line-height: 1.5; }
+.success-screen { display: none; text-align: center; padding: 3.5rem 2rem; }
+.success-screen.show { display: block; }
+.success-icon { font-size: 3.5rem; margin-bottom: 0.9rem; }
+.success-title { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: var(--deep-green); margin-bottom: 0.4rem; }
+.success-msg { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--bark); font-style: italic; margin-bottom: 1.8rem; line-height: 1.5; }
+.order-id-text { font-size: 0.78rem; color: var(--sage); letter-spacing: 0.15em; margin-bottom: 2rem; background: var(--cream); padding: 0.75rem 1.5rem; border-radius: 3px; display: inline-block; }
+
+/* eh */
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--deep-green); color: var(--cream); padding: 0.75rem 1.4rem; border-radius: 3px; font-size: 0.83rem; z-index: 500; white-space: nowrap; transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 8px 32px rgba(7,65,42,0.3); }
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* animation for page */
+.page { animation: pageFade 0.35s ease; }
+@keyframes pageFade { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+
+/* animations */
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bounce { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(6px); } }
+@keyframes scaleIn { from { opacity:0; transform:scale(0.92); } to { opacity:1; transform:scale(1); } }
+@keyframes leafFloat { 0% { opacity:0; transform:translateY(0) rotate(0deg); } 10% { opacity:0.6; } 90% { opacity:0.3; } 100% { opacity:0; transform:translateY(-120vh) rotate(360deg); } }
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s, transform 0.7s; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* mobile/ tablet design 2 */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-links.open { display: flex; flex-direction: column; position: fixed; top: 62px; left: 0; right: 0; background: var(--warm-white); padding: 1.5rem 2rem; border-bottom: 1px solid rgba(58,170,106,0.15); gap: 1rem; z-index: 199; }
+  .hamburger { display: flex; }
+  .offers-grid { grid-template-columns: 1fr; }
+  .local-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .why-grid { grid-template-columns: 1fr; }
+  .local-products { grid-template-columns: 1fr; }
+  .local-badge { position: relative; top: auto; right: auto; margin-top: 1rem; display: inline-block; }
+  .hero-title { font-size: clamp(3rem, 15vw, 5rem); }
+  .hero-actions { flex-direction: column; align-items: center; gap: 0.75rem; }
+  .btn-primary, .btn-outline { width: 100%; max-width: 260px; text-align: center; }
+  .checkout-grid { grid-template-columns: 1fr; }
+  .checkout-right { border-left: none; border-top: 1px solid var(--sand); border-radius: 0 0 6px 6px; }
+  .cart-drawer { width: 100%; }
+  .form-row { grid-template-columns: 1fr; }
+
+  /* Cards: 1 */
+  .home-sections { padding: 2.5rem 1.25rem 3rem; }
+  .home-sections-intro { margin-bottom: 2rem; }
+  .home-sections-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .home-card { min-height: 260px; }
+  .home-card-title { font-size: 1.6rem; }
+  .home-card-desc { display: none; }
+  /* spacing */
+  section { padding: 3.5rem 1.25rem; }
+  .page-header { padding: 2.5rem 1.25rem 2rem; }
+  .section-title { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+  /* Tagline  */
+  .tagline-band { padding: 3rem 1.5rem; }
+  /* Product grid */
+  .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+  /* Nav */
+  nav { padding: 0.85rem 1.25rem; }
+}
+@media (max-width: 480px) {
+  .home-sections-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .home-card { min-height: 200px; }
+  .product-grid { grid-template-columns: 1fr 1fr; }
+  .hero-tagline { font-size: 1rem; }
+  .hero-eyebrow { font-size: 0.65rem; }
+}
+
+.home-sections-grid { position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<!-- navbar -->
+<nav id="navbar">
+  <div class="nav-logo" onclick="navigate('home')">Tropical <span>ReVibe</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="navigate('shop')">Shop</a></li>
+    <li><a onclick="navigate('bundles')">Bundles</a></li>
+    <li><a onclick="navigate('about')">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" onclick="openCart()" title="View Cart">
+      🛒<span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- homepage again -->
+<div class="page page-home active" id="page-home">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-sky"></div>
+    <div class="hero-ocean"></div>
+    <div class="hero-beach"></div>
+    <div id="leaves"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Eco Friendly &amp; Zero Waste Store · Zambales</p>
+      <h1 class="hero-title">Tropical<em>ReVibe</em></h1>
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">Eco Friendly &amp; Zero Waste Store</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="navigate('shop')">Shop Now</button>
+        <button class="btn-outline" onclick="navigate('bundles')">View Bundles</button>
+      </div>
+    </div>
+    <div class="hero-scroll"></div>
+  </section>
+
+  <div class="tagline-band">
+    <div class="tagline-band-photo"></div>
+    <blockquote>
+      "Conscious living, beautifully redefined—<br>inspired by nature."
+      <cite>— Tropical ReVibe</cite>
+    </blockquote>
+  </div>
+
+  <div class="home-sections">
+
+    <div class="home-sections-intro">
+      <p class="section-label">Explore</p>
+      <h2 class="section-title">Everything We Offer</h2>
+      <p>Browse our curated eco-friendly collection, discover bundle deals, or learn our story.</p>
+    </div>
+
+    <div class="home-sections-grid">
+      <div class="home-card home-card-shop reveal" onclick="navigate('shop')">
+        <div class="home-card-img" style="background-image: url('https://thesustainablebrandsjournal.com/wp-content/uploads/2023/10/aaa-mbbLRRx6G-transformed-e1697954086537.jpg'); background-size: cover; background-position: center;">
+        </div>
+        <div class="home-card-body">
+          <div class="home-card-label">Browse All</div>
+          <div class="home-card-title">Shop the Collection</div>
+          <div class="home-card-desc">Zero-waste essentials, reusable goods &amp; eco lifestyle products.</div>
+          <div class="home-card-arrow">Explore →</div>
+        </div>
+      </div>
+      <div class="home-card home-card-bundles reveal" onclick="navigate('bundles')">
+        <div class="home-card-img" style="background-image: url('https://zuzana-eco-blog.s3.us-east-2.amazonaws.com/post-images/white-bath-background-front-view-with-cosmetics.jpg'); background-size: cover; background-position: center;">
+        </div>
+        <div class="home-card-body">
+          <div class="home-card-label">Special Offers</div>
+          <div class="home-card-title">Bundle Deals</div>
+          <div class="home-card-desc">Curated sets that save you more while doing good for the planet.</div>
+          <div class="home-card-arrow">View Bundles →</div>
+        </div>
+      </div>
+      <div class="home-card home-card-about reveal" onclick="navigate('about')">
+        <div class="home-card-img" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=85'); background-size: cover; background-position: center;">
+        </div>
+        <div class="home-card-body">
+          <div class="home-card-label">Our Story</div>
+          <div class="home-card-title">About Us</div>
+          <div class="home-card-desc">A Zambales-born brand on a mission for conscious, sustainable living.</div>
+          <div class="home-card-arrow">Learn More →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo" onclick="navigate('home')">Tropical <span>ReVibe</span></div>
+    <p>Eco Friendly &amp; Zero Waste Store · Zambales, Philippines</p>
+    <p>© 2026 Tropical ReVibe. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- shop section -->
+<div class="page" id="page-shop">
+  <div class="page-header page-header-green">
+    <div class="container">
+      <p class="section-label">Our Products</p>
+      <h2 class="section-title" style="color:var(--cream)">Shop the Collection</h2>
+      <p class="section-sub" style="color:rgba(237,247,239,0.7)">Zero-waste essentials for everyday living.</p>
+    </div>
+  </div>
+  <div class="shop-body">
+    <div class="shop-controls">
+      <div class="filter-tabs">
+        <button class="filter-tab active" onclick="filterProducts('all',this)">All</button>
+        <button class="filter-tab" onclick="filterProducts('refill',this)">Refill</button>
+        <button class="filter-tab" onclick="filterProducts('personal',this)">Personal Care</button>
+        <button class="filter-tab" onclick="filterProducts('kitchen',this)">Kitchen</button>
+        <button class="filter-tab" onclick="filterProducts('local',this)">Local</button>
+        <button class="filter-tab" onclick="filterProducts('bags',this)">Bags</button>
+      </div>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+  <footer>
+    <div class="footer-logo" onclick="navigate('home')">Tropical <span>ReVibe</span></div>
+    <p>Eco Friendly &amp; Zero Waste Store · Zambales, Philippines</p>
+    <p>© 2026 Tropical ReVibe. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- bundles -->
+<div class="page" id="page-bundles">
+  <div class="page-header page-header-blue">
+    <div class="container">
+      <p class="section-label" style="color:var(--aqua-light)">Special Bundles</p>
+      <h2 class="section-title" style="color:var(--blue-cream)">Best Offers</h2>
+      <p class="section-sub" style="color:rgba(234,244,251,0.65)">Curated bundles for a seamless zero-waste life.</p>
+    </div>
+  </div>
+  <div class="bundles-body">
+    <div class="offers-grid">
+      <div class="offer-card reveal">
+        <div class="offer-card-img">
+          <img src="https://zuzana-eco-blog.s3.us-east-2.amazonaws.com/post-images/white-bath-background-front-view-with-cosmetics.jpg" alt="Bathroom Essentials Bundle" />
+          <div class="offer-card-img-overlay"></div>
+        </div>
+        <div class="offer-card-content">
+          <div class="offer-num">01</div>
+          <span class="offer-tag">Bundle Kit</span>
+          <h3 class="offer-title">Bathroom Essentials Bundle</h3>
+          <p class="offer-body">Everything for a zero-waste bathroom — cleanly packaged, planet approved.</p>
+          <ul class="offer-items-list">
+            <li>Bamboo Toothbrush</li><li>Toothpaste Tablets</li><li>Shampoo Bar</li><li>Safety Razor</li><li>Cotton Pads</li><li>Natural Deodorant</li>
+          </ul>
+          <div class="offer-price"><del>₱650</del> ₱520</div>
+          <button class="btn-bundle" onclick="addBundleToCart('bathroom')">Add Bundle to Cart 🛒</button>
+        </div>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-card-img">
+          <img src="https://m.media-amazon.com/images/I/71bO62XNYRL._AC_.jpg" alt="Local Snacks Bundle" />
+          <div class="offer-card-img-overlay"></div>
+        </div>
+        <div class="offer-card-content">
+          <div class="offer-num">02</div>
+          <span class="offer-tag">Bundle Kit</span>
+          <h3 class="offer-title">Local Snacks Bundle</h3>
+          <p class="offer-body">A taste of Zambales — our best local products, fresh and naturally made.</p>
+          <ul class="offer-items-list">
+            <li>Dried Mangoes</li><li>Pastillas</li><li>Calamansi Juice</li><li>Coconut Oil</li><li>Coconut Vinegar</li>
+          </ul>
+          <div class="offer-price"><del>₱480</del> ₱380</div>
+          <button class="btn-bundle" onclick="addBundleToCart('snacks')">Add Bundle to Cart 🛒</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo" onclick="navigate('home')">Tropical <span>ReVibe</span></div>
+    <p>Eco Friendly &amp; Zero Waste Store · Zambales, Philippines</p>
+    <p>© 2026 Tropical ReVibe. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- local  -->
+<div class="page" id="page-local">
+  <div class="page-header page-header-green">
+    <div class="container">
+      <p class="section-label">Locally Made · Zambales</p>
+      <h2 class="section-title" style="color:var(--cream)">From Our Roots</h2>
+      <p class="section-sub" style="color:rgba(237,247,239,0.7)">Proudly sourced from local artisans and farmers in Zambales, Philippines.</p>
+    </div>
+  </div>
+  <div class="local-body">
+    <div class="local-layout">
+      <div class="reveal">
+        <div class="local-products">
+          <div class="local-item"><span class="local-item-icon"></span><div class="local-item-text"><strong>Dried Mangoes</strong><small>Sweet, sun-kissed Zambales mangoes</small></div></div>
+          <div class="local-item"><span class="local-item-icon"></span><div class="local-item-text"><strong>Pastillas</strong><small>Traditional Filipino milk candy</small></div></div>
+          <div class="local-item"><span class="local-item-icon"></span><div class="local-item-text"><strong>Calamansi Juice</strong><small>Fresh citrus, naturally refreshing</small></div></div>
+          <div class="local-item"><span class="local-item-icon"></span><div class="local-item-text"><strong>Coconut Oil &amp; Vinegar</strong><small>Pure, cold-pressed local harvest</small></div></div>
+          <div class="local-item"><span class="local-item-icon"></span><div class="local-item-text"><strong>Driftwood Decor</strong><small>Handcrafted home décor pieces</small></div></div>
+          <div class="local-item"><span class="local-item-icon"></span><div class="local-item-text"><strong>Bayong Bags</strong><small>Woven by local craftswomen</small></div></div>
+        </div>
+        <div style="margin-top:2rem">
+          <button class="btn-primary" onclick="navigate('shop'); setTimeout(()=>filterProducts('local', document.querySelectorAll('.filter-tab')[4]),100)">Shop Local Products →</button>
+        </div>
+      </div>
+      <div class="local-visual reveal">
+        <div class="local-img-wrap">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="80" stroke="rgba(0,196,114,0.3)" stroke-width="1"/>
+            <path d="M100 20 Q130 60 100 100 Q70 60 100 20Z" fill="rgba(58,170,106,0.6)"/>
+            <path d="M100 40 Q140 80 100 120 Q60 80 100 40Z" fill="rgba(0,196,114,0.4)"/>
+            <path d="M60 60 Q100 40 140 60 Q100 100 60 60Z" fill="rgba(58,170,106,0.5)"/>
+            <path d="M60 110 Q100 90 140 110 Q100 150 60 110Z" fill="rgba(0,196,114,0.35)"/>
+            <circle cx="100" cy="155" r="12" fill="rgba(184,232,200,0.4)"/>
+            <rect x="97" y="130" width="6" height="25" rx="3" fill="rgba(42,143,90,0.5)"/>
+            <text x="100" y="195" text-anchor="middle" fill="rgba(237,247,239,0.3)" font-size="11" font-family="serif" letter-spacing="2">ZAMBALES</text>
+          </svg>
+        </div>
+        <div class="local-badge"><strong>100%</strong><span>Locally Sourced</span></div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-logo" onclick="navigate('home')">Tropical <span>ReVibe</span></div>
+    <p>Eco Friendly &amp; Zero Waste Store · Zambales, Philippines</p>
+    <p>© 2026 Tropical ReVibe. All rights reserved.</p>
+  </footer>
+</div>
+
+<!--why-->
+<div class="page" id="page-why">
+  <div class="page-header page-header-green">
+    <div class="container">
+      <p class="section-label">Our Promise</p>
+      <h2 class="section-title" style="color:var(--cream)">Why Choose ReVibe?</h2>
+    </div>
+  </div>
+ 
+  <footer>
+    <div class="footer-logo" onclick="navigate('home')">Tropical <span>ReVibe</span></div>
+    <p>Eco Friendly &amp; Zero Waste Store · Zambales, Philippines</p>
+    <p>© 2026 Tropical ReVibe. All rights reserved.</p>
+  </footer>
+</div>
+
+<!--about-->
+<div class="page" id="page-about">
+
+  <!-- banner -->
+  
+
+  <!-- story -->
+  <div class="about-story">
+    <div class="about-story-img reveal">
+      <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=900&q=85" alt="Liwliwa Beach" />
+      <div class="about-story-img-badge">
+        <strong>2026</strong>
+        <span>Est. Liwliwa, Zambales</span>
+      </div>
+    </div>
+    <div class="about-story-text reveal">
+      <p class="about-story-label">Who We Are</p>
+      <h2 class="about-story-heading">Conscious living,<br>beautifully redefined.</h2>
+      <p class="about-story-intro">Tropical ReVibe is an eco-friendly and zero-waste store located in Liwliwa, Zambales — a place where nature and community come together.</p>
+      <p class="about-story-body">Inspired by the beauty of the beach, we offer sustainable alternatives for everyday living, from personal care to lifestyle essentials. Rooted in mindful living, our goal is to make sustainability both accessible and appealing. Whether you're a traveler, a surfer, or a local, Tropical ReVibe invites you to experience a more conscious way of living by the sea.</p>
+      <p class="about-story-body">Rooted in mindful living, our goal is to make sustainability both accessible and appealing. Whether you’re a traveler, a surfer, or a local, Tropical ReVibe invites you to experience a more conscious way of living by the sea.</p>
+
+      <button class="btn-primary" onclick="navigate('shop')">Shop the Collection →</button>
+    </div>
+  </div>
+
+  <!-- Vision & Mission -->
+  <div class="about-vm-section">
+    <div class="about-vm-inner">
+      <div class="about-vm-header reveal">
+        <p class="section-label">What Drives Us</p>
+        <h2 class="section-title" style="color:#ffffff">Vision &amp; Mission</h2>
+      </div>
+      <div class="about-vm-cards">
+        <div class="about-vm-card reveal">
+          <div class="about-vm-label">Vision</div>
+          <div class="about-vm-title">Our Vision</div>
+          <p class="about-vm-text">To build a community in Liwliwa where sustainable living thrives, local products are valued, and coastal beauty is preserved for generations to come.</p>
+        </div>
+        <div class="about-vm-card mission reveal">
+          <div class="about-vm-label">Mission</div>
+          <div class="about-vm-title">Our Mission</div>
+          <p class="about-vm-text">Tropical ReVibe is committed to making sustainable living accessible by offering eco-friendly and zero-waste products for everyday use. We support local artisans and small businesses while creating a space that encourages conscious choices among both locals and visitors.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Values - could be removed based on client request -->
+  <div class="about-values">
+    <div class="about-values-inner">
+      <div class="about-values-header reveal">
+        <p class="section-label">What We Stand For</p>
+        <h2 class="section-title">Our Values</h2>
+      </div>
+      <div class="about-values-grid">
+        <div class="about-value-item reveal">
+          <div class="about-value-title">Zero Plastic Commitment</div>
+          <p class="about-value-text">Every product chosen to minimize single-use plastic from your daily life.</p>
+        </div>
+        <div class="about-value-item reveal">
+          <div class="about-value-title">Local Community First</div>
+          <p class="about-value-text">We source from Zambales artisans and farmers, supporting local livelihoods.</p>
+        </div>
+        <div class="about-value-item reveal">
+          <div class="about-value-title">Refill, Reuse, Revibe</div>
+          <p class="about-value-text">Our refill station lets you top up your favorites — less packaging, more purpose.</p>
+        </div>
+        <div class="about-value-item reveal">
+          <div class="about-value-title">100% Natural Products</div>
+          <p class="about-value-text">Carefully curated products free from harmful chemicals and synthetic additives.</p>
+        </div>
+        <div class="about-value-item reveal">
+          <div class="about-value-title">Plastic-Free Packaging</div>
+          <p class="about-value-text">All orders packed in recyclable or reusable materials. Always.</p>
+        </div>
+        <div class="about-value-item reveal">
+          <div class="about-value-title">Mission-Driven Store</div>
+          <p class="about-value-text">Every purchase supports a greener Zambales and a healthier Philippines.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- where -->
+  <div class="about-find-us">
+    <div class="about-find-img reveal">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=85" alt="Liwliwa Beach Zambales" />
+    </div>
+    <div class="about-find-content reveal">
+      <p class="section-label">Visit Us</p>
+      <h2 class="about-find-heading">Come find us<br>by the sea.</h2>
+      <div class="about-info-list">
+        <div class="about-info-item">
+          <div class="about-info-icon-wrap">📍</div>
+          <div>
+            <div class="about-info-label">Location</div>
+            <div class="about-info-value">Liwliwa Beach, Brgy. Sto Niño,<br>San Felipe, Zambales, 2204</div>
+          </div>
+        </div>
+        <div class="about-info-item">
+          <div class="about-info-icon-wrap">📸</div>
+          <div>
+            <div class="about-info-label">Instagram</div>
+            <div class="about-info-value"><a href="https://www.instagram.com/tropicalrevibe_zambales" target="_blank">@tropicalrevibe_zambales</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo" onclick="navigate('home')">Tropical <span>ReVibe</span></div>
+    <p>Eco Friendly &amp; Zero Waste Store · Liwliwa, Zambales, Philippines</p>
+    <p>© 2026 Tropical ReVibe. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- contact? -->
+<!-- overlay -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Cart <span id="cartCount"></span></h3>
+    <button class="close-cart" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty">
+      <div class="cart-empty-icon"></div>
+      <p>Your cart is empty.<br>Start adding some eco-friendly finds!</p>
+    </div>
+  </div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><strong id="cartSubtotal">₱0</strong></div>
+    <div class="cart-total"><span>Total</span><strong id="cartTotalAmt">₱0</strong></div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout →</button>
+    <button class="continue-shopping" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- Checkout -->
+<div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckoutOutside(event)">
+  <div class="checkout-box">
+    <button class="checkout-close" onclick="closeCheckout()">✕</button>
+    <div id="checkoutGrid" class="checkout-grid">
+      <div class="checkout-left">
+        <div class="checkout-title">Checkout</div>
+        <div class="checkout-subtitle">Complete your eco-friendly order</div>
+        <div class="steps">
+          <div class="step active" id="step1"><div class="step-circle">1</div><div class="step-label">Details</div></div>
+          <div class="step" id="step2"><div class="step-circle">2</div><div class="step-label">Delivery</div></div>
+          <div class="step" id="step3"><div class="step-circle">3</div><div class="step-label">Payment</div></div>
+        </div>
+        <div class="form-section active" id="formStep1">
+          <div class="form-row">
+            <div class="form-group"><label>Full Name *</label><input id="f-name" type="text"  /></div>
+            <div class="form-group"><label>Email *</label><input id="f-email" type="email"  /></div>
+          </div>
+          <div class="form-group"><label>Phone *</label><input id="f-phone" type="tel"  /></div>
+          <div class="form-nav"><button class="btn-next" onclick="goStep(2)">Next →</button></div>
+        </div>
+        <div class="form-section" id="formStep2">
+          <div class="form-group"><label>Delivery Address</label><textarea id="f-address" placeholder="Street, Barangay, City, Province"></textarea></div>
+          <div class="form-group"><label>Delivery Option</label>
+            <select id="f-delivery" onchange="updateDelivery()">
+              <option value="pickup">Store Pickup — Free</option>
+              <option value="local">Local Delivery (Zambales) — ₱80</option>
+              <option value="provincial">Provincial Delivery — ₱150</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Notes (optional)</label><textarea id="f-notes" placeholder="Allergies, special requests..."></textarea></div>
+          <div class="form-nav"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" onclick="goStep(3)">Next →</button></div>
+        </div>
+        <div class="form-section" id="formStep3">
+          <div class="payment-options">
+            <label class="payment-opt selected" onclick="selectPayment(this)"><input type="radio" name="payment" value="gcash" checked /><span class="payment-opt-icon">📱</span><div class="payment-opt-info"><strong>GCash</strong><small>Send to 09XX-XXX-XXXX · TropicalReVibe</small></div></label>
+            <label class="payment-opt" onclick="selectPayment(this)"><input type="radio" name="payment" value="maya" /><span class="payment-opt-icon">💳</span><div class="payment-opt-info"><strong>Maya (PayMaya)</strong><small>Send to 09XX-XXX-XXXX · TropicalReVibe</small></div></label>
+            <label class="payment-opt" onclick="selectPayment(this)"><input type="radio" name="payment" value="bank" /><span class="payment-opt-icon">🏦</span><div class="payment-opt-info"><strong>Bank Transfer</strong><small>BPI / BDO – account details sent via email</small></div></label>
+            <label class="payment-opt" onclick="selectPayment(this)"><input type="radio" name="payment" value="cod" /><span class="payment-opt-icon">💵</span><div class="payment-opt-info"><strong>Cash on Delivery / Pickup</strong><small>Pay when you receive your order</small></div></label>
+          </div>
+          <div class="form-nav"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next" onclick="placeOrder()">Place Order 🌿</button></div>
+        </div>
+      </div>
+      <div class="checkout-right">
+        <div class="order-summary-title">Order Summary</div>
+        <div class="order-summary-items" id="summaryItems"></div>
+        <hr class="summary-divider" />
+        <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal">₱0</span></div>
+        <div class="summary-row"><span>Delivery</span><span id="sumDelivery">TBD</span></div>
+        <div class="summary-row total"><span>Total</span><span id="sumTotal">₱0</span></div>
+        <div class="eco-note">🌿 <span>All orders are packed in recyclable or reusable materials. Thank you for choosing zero-waste!</span></div>
+      </div>
+    </div>
+    <div class="success-screen" id="successScreen">
+      <div class="success-icon"></div>
+      <div class="success-title">Order Placed!</div>
+      <div class="success-msg">Thank you for choosing zero-waste living.<br>We'll reach out with your order details shortly.</div>
+      <div class="order-id-text" id="orderIdEl"></div>
+      <button class="btn-primary" onclick="finishOrder()">Back to Shop</button>
+    </div>
+  </div>
+</div>
+
+<!-- v -->
+<div class="toast" id="toast"></div>
+
+<script>
+// products - uses web images for this website.
+// can be replaced with local images if hosting on a server with image storage, or can be moved to a JSON file for better organization.
+// can also be replaced using local images when hosting locally.
+const PRODUCTS = [
+  {id:'r1',name:'Shampoo Refill',cat:'refill',catLabel:'Refill Essentials',icon:'https://cdn.shopify.com/s/files/1/2160/1829/files/NL-Collection-Banners-Refill-mobile_grande.jpg?v=1587404002',price:85,desc:'Natural, sulfate-free. Bring your container!',badge:'Zero Waste'},
+  {id:'r2',name:'Conditioner Refill',cat:'refill',catLabel:'Refill Essentials',icon:'https://flourishbeautylab.com/cdn/shop/products/Conditioner-Refill-Pouches.jpg?v=1685725090',price:85,desc:'Deep nourishing conditioner refill.',badge:null},
+  {id:'r3',name:'Liquid Soap Refill',cat:'refill',catLabel  :'Refill Essentials',icon:'https://media.licdn.com/dms/image/sync/v2/D4E27AQF-gFpABJLw3A/articleshare-shrink_800/articleshare-shrink_800/0/1711663531830?e=2147483647&v=beta&t=Awrhe21T-Rb7owNH1M8mJlJPArROJGYwg9ed-hNd5CI',price:65,desc:'Gentle on hands, tough on germs.',badge:null},
+  {id:'r4',name:'Dishwashing Liquid Refill',cat:'refill',catLabel:'Refill Essentials',icon:'https://image.made-in-china.com/2f0j00YsVkUgRBbecS/Recyclable-Mono-PE-250ml-500ml-650ml-Doypack-Spout-Pouch-Handwashing-Eco-Friendly-Dishwashing-Liquid-Refill-Pouch.webp',price:70,desc:'Cuts grease with plant-based power.',badge:null},
+  {id:'r5',name:'Laundry Detergent Refill',cat:'refill',catLabel:'Refill Essentials',icon:'https://www.tenereteam.com/blogs/wp-content/uploads/2024/06/best-eco-friendly-laundry-detergents-4.webp',price:90,desc:'Effective clean, zero plastic bottle.',badge:'Best Seller'},
+  {id:'r6',name:'Multi-Purpose Cleaner Refill',cat:'refill',catLabel:'Refill Essentials',icon:'https://down-my.img.susercontent.com/file/sg-11134201-22110-qfa8pgm18akv3d',price:75,desc:'All-in-one eco cleaning solution.',badge:null},
+  {id:'r7',name:'Hand Sanitizer Refill',cat:'refill',catLabel:'Refill Essentials',icon:'https://images.squarespace-cdn.com/content/v1/547a3834e4b053a861c4874e/1597093767174-YZXS7FZHG70FXM1QQULT/eco-friendly-natural-hand-sanitizer',price:60,desc:'70% alcohol, skin-friendly formula.',badge:null},
+  {id:'r8',name:'Body Wash Refill',cat:'refill',catLabel:'Refill Essentials',icon:'https://images.squarespace-cdn.com/content/v1/547a3834e4b053a861c4874e/26404b15-aa31-4b49-a0d4-30274f861c18/Sustainably+Chic+%7C+Sustainable+Fashion+%26+Beauty+Blog+%7C+Zero+Waste+%26+Eco+Friendly+Body+Wash+%26+Soap+%7C+Ethique.jpg?format=2500w',price:90,desc:'Luxurious lather, 100% natural scent.',badge:null},
+  {id:'p1',name:'Bamboo Toothbrush',cat:'personal',catLabel:'Personal Care',icon:'https://suesen.com/wp-content/uploads/2020/03/1-146.jpg',price:95,desc:'BPA-free bristles on a compostable handle.',badge:'Eco Swap'},
+  {id:'p2',name:'Safety Razor',cat:'personal',catLabel:'Personal Care',icon:'https://citizensustainable.com/wp-content/uploads/2021/12/bambaw-safety-razor.webp',price:320,desc:'Lifetime razor. Zero plastic, superior shave.',badge:'Zero Waste'},
+  {id:'p3',name:'Shampoo Bar',cat:'personal',catLabel:'Personal Care',icon:'https://livnature.com/cdn/shop/collections/web-a2-Annie_Green_r1_770A0303.jpg?v=1715523061&width=2400',price:145,desc:'Lasts up to 80 washes. No bottle needed.',badge:'Best Seller'},
+  {id:'p4',name:'Toothpaste Tablets',cat:'personal',catLabel:'Personal Care',icon:'https://ecologic-power.com/wp-content/uploads/2023/12/eco_friendly_toothpaste_tablets.jpg',price:175,desc:'Chew + brush. Travel-friendly.',badge:null},
+  {id:'p5',name:'Natural Deodorant',cat:'personal',catLabel:'Personal Care',icon:'https://i.pinimg.com/originals/eb/a6/f9/eba6f936eed5d6824a93c9f078163943.jpg',price:185,desc:'Aluminum-free, all-day freshness.',badge:null},
+  {id:'p6',name:'Reusable Cotton Pads',cat:'personal',catLabel:'Personal Care',icon:'https://m.media-amazon.com/images/I/911qbbGNarL._AC_SX679_.jpg',price:120,desc:'Set of 10 washable cotton rounds.',badge:null},
+  {id:'p7',name:'Eco-Friendly Floss',cat:'personal',catLabel:'Personal Care',icon:'https://www.sustainablejungle.com/wp-content/uploads/2024/09/Image-by-Sustainable-Jungle-etee-eco-friendly-floss.jpg',price:95,desc:'Silk or corn-based, compostable packaging.',badge:null},
+  {id:'p8',name:'Reusable Cotton Buds',cat:'personal',catLabel:'Personal Care',icon:'https://m.media-amazon.com/images/I/81BLRJa1xPS._SL1500_.jpg',price:110,desc:'Medical-grade silicone tips, washable.',badge:null},
+  {id:'k1',name:'Beeswax Food Wraps',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://m.media-amazon.com/images/I/81hufMcHFnL._AC_SL1500_.jpg',price:195,desc:'Replace cling wrap. Reusable up to 1 year.',badge:'Eco Pick'},
+  {id:'k2',name:'Stainless Steel Straws',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://i5.walmartimages.com/seo/Eco-Friendly-Stainless-Steel-Straw-Set-3-Piece-Travel-Kit-Cleaning-Brush-Home-Decor-Kitchen-Other_82b234e0-71c3-49e4-a7ff-0a503d57d6ca.b9e8d8ff0ff495a1b852ec7886941f89.jpeg?odnHeight=573&odnWidth=573&odnBg=FFFFFF',price:75,desc:'Set of 4 with cleaning brush.',badge:null},
+  {id:'k3',name:'Bamboo Cutlery Set',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://tse2.mm.bing.net/th/id/OIP.erTPtlpyAoGwKlLsyDmY-QHaGV?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3',price:165,desc:'Fork, knife, spoon, chopsticks + pouch.',badge:null},
+  {id:'k4',name:'Reusable Glass Jars',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://thumbs.dreamstime.com/b/sustainable-zero-waste-tea-packaging-featuring-reusable-glass-jars-eco-friendly-refined-look-zero-waste-tea-packaging-367915070.jpg?w=768',price:145,desc:'Set of 3 airtight jars for pantry storage.',badge:null},
+  {id:'k5',name:'Silicone Food Bags',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://m.media-amazon.com/images/I/81hijZxmGkS._AC_SL1500_.jpg',price:220,desc:'Leak-proof, freezer & microwave safe.',badge:'Best Seller'},
+  {id:'k6',name:'Dish Brush',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://tse1.explicit.bing.net/th/id/OIP.ZtFxS_2O67ZGu01QiFrBEwHaHa?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3',price:125,desc:'Compostable wood handle, coconut fiber bristles.',badge:null},
+  {id:'k7',name:'Cloth Napkins',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://m.media-amazon.com/images/I/61YKhc2MpSL.jpg',price:95,desc:'Set of 6 cotton napkins, machine washable.',badge:null},
+  {id:'k8',name:'Reusable Water Bottle',cat:'kitchen',catLabel:'Kitchen & Home',icon:'https://wellzywell.com/images/large/exploring-eco-friendly-bamboo-water-bottle.webp',price:350,desc:'Double-wall insulated stainless steel, 500ml.',badge:'Zero Waste'},
+  {id:'l1',name:'Dried Mangoes',cat:'local',catLabel:'Local · Zambales',icon:'https://earthsidefarms.com/cdn/shop/files/dried_organic_mangoes_13.jpg?v=1751284645',price:95,desc:'Sun-dried Zambales mangoes. Sweet & chewy.',badge:'Local'},
+  {id:'l2',name:'Pastillas',cat:'local',catLabel:'Local · Zambales',icon:'https://d22fxaf9t8d39k.cloudfront.net/c023ae5543c25d1dd98508c751894f298803f93f6f7dbbd46d395490d1c75c2640872.png',price:75,desc:'Traditional Filipino milk candy, handmade.',badge:'Local'},
+  {id:'l3',name:'Calamansi Juice',cat:'local',catLabel:'Local · Zambales',icon:'https://m.media-amazon.com/images/I/71bO62XNYRL._AC_.jpg',price:85,desc:'Freshly bottled, no preservatives.',badge:'Local'},
+  {id:'l4',name:'Coconut Oil',cat:'local',catLabel:'Local · Zambales',icon:'https://www.treehugger.com/thmb/_MysHzRy9jsANLDX6rjF9jOPpzU=/2121x1414/filters:fill(auto,1)/GettyImages-808164970-f75f7c744fa140dd935809fe2c01c62a.jpg',price:150,desc:'Cold-pressed, virgin coconut oil, 250ml.',badge:'Local'},
+  {id:'l5',name:'Coconut Vinegar',cat:'local',catLabel:'Local · Zambales',icon:'https://www.econutrena.com/wp-content/uploads/2021/10/RYMB3696.jpg',price:90,desc:'Naturally fermented, raw & unfiltered.',badge:'Local'},
+  {id:'l6',name:'Driftwood Decor',cat:'local',catLabel:'Local · Zambales',icon:'https://laughlore.com/wp-content/uploads/2024/11/image-2762.jpeg',price:280,desc:'Handcrafted driftwood art piece. Unique!',badge:'Local'},
+  {id:'b1',name:'Bayong Bag',cat:'bags',catLabel:'Bags & Carriers',icon:'https://www.ourmarket.com.ph/images/blog/23/AFB06A40-D221-4DD4-8411-16FC609BDE67.jpg',price:245,desc:'Traditional Filipino woven bag. Hand-crafted.',badge:'Handmade'},
+  {id:'b2',name:'Tote Bag',cat:'bags',catLabel:'Bags & Carriers',icon:'https://tse2.mm.bing.net/th/id/OIP.oY4K5b2fzOhHYdsycKagXAHaFw?cb=thfvnext&rs=1&pid=ImgDetMain&o=7&rm=3',price:175,desc:'Heavy-duty canvas tote, eco-printed.',badge:null},
+];
+
+// ok
+let cart = [];
+let deliveryFee = 0;
+let currentStep = 1;
+let currentPage = 'home';
+
+// naviagtion
+function navigate(page) {
+  // hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // show target
+  const target = document.getElementById('page-' + page);
+  if (target) { target.classList.add('active'); }
+  // update nav active state
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active-link'));
+  const map = { shop:'shop', bundles:'bundles', local:'local', why:'why', about:'about', contact:'contact' };
+  if (map[page]) {
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      if (a.getAttribute('onclick') && a.getAttribute('onclick').includes(`'${page}'`)) {
+        a.classList.add('active-link');
+      }
+    });
+  }
+  currentPage = page;
+  window.scrollTo(0,0);
+  closeMenu();
+  // re-init reveals for the new page
+  setTimeout(() => {
+    document.querySelectorAll('#page-' + page + ' .reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+  }, 50);
+  // render products when navigating to shop
+  if (page === 'shop') renderProducts('all');
+}
+
+// render products - can be optimized by only rendering the filtered category instead of clearing and re-rendering everything, but this is simpler for now given the small product list. Can be refactored later if needed.
+function renderProducts(filter='all') {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+  // reset filter tabs
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  const activeTab = [...document.querySelectorAll('.filter-tab')].find(t => t.getAttribute('onclick').includes(`'${filter}'`));
+  if (activeTab) activeTab.classList.add('active');
+  const list = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === filter);
+  list.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'product-card reveal';
+    card.innerHTML = `
+      <div class="product-img">
+        ${p.badge ? `<span class="product-badge">${p.badge}</span>` : ''}
+        <img src="${p.icon}" alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;" loading="lazy" onerror="this.style.display='none'" />
+      </div>
+      <div class="product-body">
+        <div class="product-category">${p.catLabel}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">₱${p.price}<small>per item</small></div>
+          <button class="add-to-cart-btn" id="btn-${p.id}" onclick="addToCart('${p.id}')">+ Add</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+    setTimeout(() => revealObserver.observe(card), i * 30);
+  });
+}
+
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat);
+}
+
+// cart functions - can be optimized by using a Map for O(1) lookups instead of find/filter,
+function addToCart(productId) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+  const existing = cart.find(c => c.id === productId);
+  if (existing) { existing.qty++; }
+  else { cart.push({...product, qty:1}); }
+  updateCartUI();
+  showToast(`🌿 ${product.name} added to cart!`);
+  const btn = document.getElementById('btn-' + productId);
+  if (btn) {
+    btn.textContent = '✓ Added';
+    btn.classList.add('added');
+    setTimeout(() => { btn.textContent = '+ Add'; btn.classList.remove('added'); }, 1300);
+  }
+}
+
+function addBundleToCart(bundle) {
+  const bundles = {
+    bathroom: {id:'bundle-bathroom', name:'Bathroom Essentials Bundle', icon:'https://zuzana-eco-blog.s3.us-east-2.amazonaws.com/post-images/white-bath-background-front-view-with-cosmetics.jpg', price:520, catLabel:'Bundle Kit'},
+    snacks:   {id:'bundle-snacks',   name:'Local Snacks Bundle',        icon:'https://m.media-amazon.com/images/I/71bO62XNYRL._AC_.jpg', price:380, catLabel:'Bundle Kit'},
+  };
+  const b = bundles[bundle];
+  const existing = cart.find(c => c.id === b.id);
+  if (existing) { existing.qty++; }
+  else { cart.push({...b, qty:1}); }
+  updateCartUI();
+  showToast(`🛒 ${b.name} added to cart!`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  updateCartUI();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+  updateCartUI();
+}
+
+function getSubtotal() { return cart.reduce((s, c) => s + c.price * c.qty, 0); }
+function getTotal() { return getSubtotal() + deliveryFee; }
+
+function updateCartUI() {
+  const total = cart.reduce((s, c) => s + c.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = total;
+  badge.classList.toggle('visible', total > 0);
+  document.getElementById('cartCount').textContent = total > 0 ? `(${total})` : '';
+  const body = document.getElementById('cartBody');
+  const footer = document.getElementById('cartFooter');
+  if (cart.length === 0) {
+    body.innerHTML = '<div class="cart-empty"><div class="cart-empty-icon"></div><p>Your cart is empty.<br>Start adding some eco-friendly finds!</p></div>';
+    footer.style.display = 'none';
+  } else {
+    body.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-icon"><img src="${item.icon}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;" /></div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-cat">${item.catLabel}</div>
+          <div class="cart-item-row">
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty('${item.id}',-1)">−</button>
+              <div class="qty-num">${item.qty}</div>
+              <button class="qty-btn" onclick="changeQty('${item.id}',1)">+</button>
+            </div>
+            <div class="cart-item-price">₱${(item.price*item.qty).toLocaleString()}</div>
+          </div>
+          <button class="remove-item" onclick="removeFromCart('${item.id}')">Remove</button>
+        </div>
+      </div>`).join('');
+    footer.style.display = 'block';
+    document.getElementById('cartSubtotal').textContent = `₱${getSubtotal().toLocaleString()}`;
+    document.getElementById('cartTotalAmt').textContent = `₱${getTotal().toLocaleString()}`;
+  }
+}
+
+function openCart() {
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// checkout functions - can be further expanded with form validation, real payment integration, and order management, but this is a basic flow for demonstration purposes.
+function openCheckout() {
+  if (cart.length === 0) return;
+  closeCart();
+  currentStep = 1;
+  deliveryFee = 0;
+  document.getElementById('f-delivery').value = 'pickup';
+  goStep(1, true);
+  document.getElementById('successScreen').classList.remove('show');
+  document.getElementById('checkoutGrid').style.display = '';
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  updateSummary();
+}
+function closeCheckout() {
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeCheckoutOutside(e) {
+  if (e.target === document.getElementById('checkoutOverlay')) closeCheckout();
+}
+
+function goStep(n, skipValidation) {
+  if (!skipValidation && n === 2) {
+    const name  = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    if (!name || !email || !phone) { showToast('⚠️ Please fill in all required fields.'); return; }
+  }
+  currentStep = n;
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('formStep'+i).classList.toggle('active', i===n);
+    const s = document.getElementById('step'+i);
+    s.classList.toggle('active', i===n);
+    s.classList.toggle('done', i<n);
+  }
+}
+
+function selectPayment(label) {
+  document.querySelectorAll('.payment-opt').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+}
+
+function updateDelivery() {
+  const val = document.getElementById('f-delivery').value;
+  deliveryFee = val==='pickup' ? 0 : val==='local' ? 80 : 150;
+  updateSummary();
+}
+
+function updateSummary() {
+  const el = document.getElementById('summaryItems');
+  if (!el) return;
+  el.innerHTML = cart.map(item => `
+    <div class="summary-item">
+      <span class="summary-item-icon"><img src="${item.icon}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;border-radius:4px;" /></span>
+      <div style="flex:1;min-width:0">
+        <div class="summary-item-name">${item.name}</div>
+        <div class="summary-item-qty">Qty: ${item.qty}</div>
+      </div>
+      <span class="summary-item-price">₱${(item.price*item.qty).toLocaleString()}</span>
+    </div>`).join('');
+  document.getElementById('sumSubtotal').textContent = `₱${getSubtotal().toLocaleString()}`;
+  document.getElementById('sumDelivery').textContent = deliveryFee===0 ? 'Free / TBD' : `₱${deliveryFee}`;
+  document.getElementById('sumTotal').textContent = `₱${getTotal().toLocaleString()}`;
+}
+
+function placeOrder() {
+  const orderId = 'TRV-' + Date.now().toString().slice(-7).toUpperCase();
+  document.getElementById('orderIdEl').textContent = `Order Reference: ${orderId}`;
+  document.getElementById('checkoutGrid').style.display = 'none';
+  document.getElementById('successScreen').classList.add('show');
+  cart = []; deliveryFee = 0;
+  updateCartUI();
+}
+
+function finishOrder() {
+  closeCheckout();
+  navigate('shop');
+  showToast('🌿 Thank you for shopping at Tropical ReVibe!');
+}
+
+// utility function for setting card background from file input - can be used for user profile picture or custom product images if needed.
+function setCardBg(input, id) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const cardImg = document.getElementById(id);
+    cardImg.style.backgroundImage = `url('${e.target.result}')`;
+    cardImg.style.backgroundSize = 'cover';
+    cardImg.style.backgroundPosition = 'center';
+    cardImg.classList.add('has-image');
+  };
+  reader.readAsDataURL(file);
+}
+
+// simple notification system for user feedback like adding to cart, etc..
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// navbar
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 30));
+function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+function closeMenu() { document.getElementById('navLinks').classList.remove('open'); }
+
+// leaf animation
+const leafContainer = document.getElementById('leaves');
+const leafPaths = [
+  'M10,30 Q25,0 40,15 Q55,30 40,50 Q25,65 10,50 Q-5,35 10,30Z',
+  'M5,20 Q20,5 35,20 Q50,35 35,55 Q20,70 5,55 Q-10,40 5,20Z',
+  'M15,10 Q35,0 50,20 Q65,40 50,60 Q35,75 15,60 Q0,45 15,10Z'
+];
+function spawnLeaf() {
+  if (currentPage !== 'home') return;
+  const el = document.createElement('div');
+  el.className = 'leaf';
+  const size=20+Math.random()*40, dur=8+Math.random()*12, delay=Math.random()*5;
+  el.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}vw;bottom:-${size}px;animation:leafFloat ${dur}s ${delay}s ease-in forwards;`;
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 60 80');
+  const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',leafPaths[Math.floor(Math.random()*leafPaths.length)]);
+  path.setAttribute('fill',`rgba(0,196,114,${0.3+Math.random()*0.4})`);
+  svg.appendChild(path); el.appendChild(svg); leafContainer.appendChild(el);
+  setTimeout(()=>el.remove(),(dur+delay)*1000);
+}
+setInterval(spawnLeaf, 2200);
+spawnLeaf(); spawnLeaf();
+
+// scroll animation
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e,i) => {
+    if (e.isIntersecting) {
+      setTimeout(()=>e.target.classList.add('visible'), i*60);
+      revealObserver.unobserve(e.target);
+    }
+  });
+}, {threshold:0.08});
+document.querySelectorAll('#page-home .reveal').forEach(el=>revealObserver.observe(el));
+
+// closing cart and checkout using escape key
+document.addEventListener('keydown', e => { if (e.key==='Escape'){closeCart();closeCheckout();} });
+</script>
+</body>
+</html>
